@@ -2,10 +2,10 @@ const Mailjet = require("node-mailjet");
 const express = require('express')
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+require('dotenv').config()
 
 const app = express()
-const port = 3000
+const port = process.env.SERVER_PORT
 
 const jsonParser = bodyParser.json()
 
@@ -44,8 +44,8 @@ app.listen(port, () => {
 
 function send({ mail, phone }) {
     const mailjet = new Mailjet({
-        apiKey: 'ea502818bff21c00d6dce0ac0305304a',
-        apiSecret: '6d43ba391713c5427ce66c21dc649789'
+        apiKey: process.env.MAILJET_API_KEY,
+        apiSecret: process.env.MAILJET_API_SECRET
     });
 
     const request = mailjet
@@ -54,17 +54,16 @@ function send({ mail, phone }) {
             Messages: [
                 {
                     From: {
-                        Email: "pogeraf2001@gmail.com",
-                        Name: "Mailjet Pilot"
+                        Email: process.env.MAILJET_EMAIL_FROM,
+                        Name: process.env.MAILJET_NAME_FROM
                     },
                     To: [
                         {
-                            Email: "pogeraf2001@gmail.com",
-                            Name: "passenger 1"
+                            Email: process.env.MAILJET_EMAIL_TO,
+                            Name: process.env.MAILJET_NAME_TO
                         }
                     ],
-                    Subject: "Test",
-                    TextPart: "Hello",
+                    Subject: process.env.MAILJET_SUBJECT,
                     HTMLPart: `E-mail: ${mail}<br>Phone: ${phone}`
                 }
             ]
