@@ -13,6 +13,10 @@ app.use(bodyParser.json({ type: 'application/json' }))
 
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.json('OK')
+})
+
 app.post('/', jsonParser, (req, res) => {
     if (!req.body?.mail) {
         res.statusCode = 400;
